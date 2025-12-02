@@ -219,7 +219,7 @@
     .hero-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
     /* Sections */
-    section { padding: 90px 0; position: relative; overflow: hidden; }
+    section { padding: 90px 0; position: relative; overflow: hidden; scroll-margin-top: 90px; }
     section .section-title {
       text-align: center;
       margin-bottom: 14px;
@@ -789,22 +789,15 @@
 
   <script>
     const burger = document.querySelector('.burger');
-    const header = document.querySelector('header');
     const mobileNav = document.getElementById('mobileNav');
 
     burger.addEventListener('click', () => {
       document.body.classList.toggle('nav-open');
-      if (mobileNav.style.display === 'flex') {
-        mobileNav.style.display = 'none';
-      } else {
-        mobileNav.style.display = 'flex';
-      }
     });
 
     mobileNav.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         document.body.classList.remove('nav-open');
-        mobileNav.style.display = 'none';
       });
     });
 
