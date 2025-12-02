@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smile Thai Spa – Wohlfühlrituale in Baden</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #7C0A02;
+      --primary-dark: #640801;
+      --gold: #D4AF37;
+      --ivory: #F5E9D9;
+      --text: #2c1b16;
+      --muted: #5c463a;
+      --shadow: 0 14px 40px rgba(0,0,0,0.12);
+      --radius: 12px;
+      --transition: 0.3s ease;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text);
+      background: #fff;
+      scroll-behavior: smooth;
+      line-height: 1.6;
+    }
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', 'Times New Roman', serif;
+      margin: 0 0 12px;
+      color: var(--primary);
+      letter-spacing: 0.3px;
+    }
+    p { margin: 0 0 12px; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    /* Layout */
+    .container {
+      width: min(1200px, 90vw);
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .nav-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+    }
+    .logo {
+      font-weight: 700;
+      color: var(--primary);
+      font-family: 'Playfair Display', serif;
+      letter-spacing: 0.6px;
+      font-size: 1.2rem;
+    }
+    nav ul {
+      display: flex;
+      gap: 18px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+    }
+    nav a {
+      font-weight: 500;
+      padding: 8px 10px;
+      border-radius: 999px;
+      transition: var(--transition);
+    }
+    nav a:hover, nav a:focus {
+      color: var(--primary);
+      background: rgba(124,10,2,0.08);
+    }
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 12px 20px;
+      border-radius: 999px;
+      border: 2px solid transparent;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 10px 24px rgba(124,10,2,0.22);
+    }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--primary);
+      border-color: var(--gold);
+    }
+    .btn-secondary:hover { background: rgba(212,175,55,0.12); }
+
+    /* Mobile nav */
+    .burger {
+      display: none;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+    }
+    .burger span {
+      width: 22px;
+      height: 2px;
+      background: var(--primary);
+      position: relative;
+    }
+    .burger span::before, .burger span::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      width: 22px;
+      height: 2px;
+      background: var(--primary);
+      transition: var(--transition);
+    }
+    .burger span::before { top: -7px; }
+    .burger span::after { top: 7px; }
+    .nav-open .burger span { background: transparent; }
+    .nav-open .burger span::before { transform: translateY(7px) rotate(45deg); }
+    .nav-open .burger span::after { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0; right: 0;
+      background: #fff;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+      flex-direction: column;
+      padding: 16px;
+      gap: 10px;
+    }
+    .mobile-nav a {
+      padding: 12px;
+      border-radius: 10px;
+      color: var(--text);
+      font-weight: 600;
+    }
+    .mobile-nav a:hover { background: rgba(124,10,2,0.06); }
+    .nav-open .mobile-nav { display: flex; }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      min-height: 88vh;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      text-align: center;
+      padding: 120px 0 100px;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(115deg, rgba(124,10,2,0.88), rgba(124,10,2,0.78)),
+                  url('https://via.placeholder.com/1600x900/9b6b5a/ffffff?text=Spa+Ambiente+Platzhalter') center/cover no-repeat;
+      z-index: -2;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(212,175,55,0.24), transparent 35%),
+                  radial-gradient(circle at 80% 10%, rgba(255,255,255,0.12), transparent 30%);
+      z-index: -1;
+    }
+    .hero .eyebrow {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      color: #fff;
+      font-size: clamp(2.6rem, 5vw, 3.6rem);
+      margin-bottom: 16px;
+    }
+    .hero p {
+      color: #f9f6f2;
+      max-width: 720px;
+      margin: 0 auto 26px;
+      font-size: 1.05rem;
+    }
+    .hero-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    /* Sections */
+    section { padding: 90px 0; position: relative; overflow: hidden; scroll-margin-top: 90px; }
+    section .section-title {
+      text-align: center;
+      margin-bottom: 14px;
+      font-size: clamp(2rem, 3vw, 2.6rem);
+    }
+    section .section-subtitle {
+      text-align: center;
+      color: var(--muted);
+      max-width: 720px;
+      margin: 0 auto 40px;
+    }
+
+    /* Why section */
+    .why { background: var(--ivory); }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      align-items: center;
+    }
+    .why-text p { color: var(--muted); }
+    .icon-list {
+      display: grid;
+      gap: 16px;
+    }
+    .icon-card {
+      background: #fff;
+      padding: 18px 20px;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.08);
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      align-items: center;
+      gap: 14px;
+    }
+    .icon-circle {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(212,175,55,0.24), rgba(212,175,55,0.55));
+      display: grid;
+      place-items: center;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 1.1rem;
+      border: 1px solid rgba(212,175,55,0.5);
+    }
+    .icon-card h4 { margin: 0 0 6px; color: var(--text); }
+    .icon-card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+
+    /* Offer */
+    .offer { background: #fbf6ee; }
+    .offer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 22px;
+    }
+    .card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: 0 16px 30px rgba(0,0,0,0.08);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 5px;
+      background: linear-gradient(90deg, var(--gold), rgba(212,175,55,0.6));
+    }
+    .card h3 { color: var(--text); }
+    .card p { color: var(--muted); }
+    .card ul { margin: 0; padding-left: 18px; color: var(--muted); }
+    .card li { margin-bottom: 6px; }
+    .card .btn-secondary { align-self: flex-start; margin-top: auto; }
+
+    /* Specials */
+    .specials { background: var(--primary); color: #fff; }
+    .specials h2 { color: #fff; }
+    .specials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+      margin-top: 30px;
+    }
+    .special-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(212,175,55,0.5);
+      border-radius: var(--radius);
+      padding: 20px;
+      color: #fbeedc;
+      box-shadow: 0 14px 28px rgba(0,0,0,0.15);
+    }
+    .special-card h3 { color: var(--gold); }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 26px;
+      align-items: start;
+    }
+    .team-cards {
+      display: grid;
+      gap: 16px;
+    }
+    .team-card {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 22px rgba(0,0,0,0.06);
+    }
+    .avatar {
+      width: 70px; height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(212,175,55,0.35), rgba(124,10,2,0.25));
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .team-card h4 { margin: 0 0 6px; }
+    .team-card p { margin: 0; color: var(--muted); }
+
+    /* Gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .gallery-item {
+      aspect-ratio: 1 / 1;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(212,175,55,0.28), rgba(124,10,2,0.18));
+      position: relative;
+      overflow: hidden;
+    }
+    .gallery-item::after {
+      content: 'Raum-Ansicht';
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: rgba(0,0,0,0.45);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    /* Voucher */
+    .voucher-card {
+      background: #fff;
+      border: 1px solid rgba(212,175,55,0.3);
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .voucher-card p { color: var(--muted); margin-bottom: 20px; }
+
+    /* Contact */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      align-items: start;
+    }
+    .contact-card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 22px;
+      border: 1px solid rgba(0,0,0,0.05);
+      box-shadow: 0 12px 22px rgba(0,0,0,0.08);
+    }
+    .contact-card h3 { margin-bottom: 10px; color: var(--text); }
+    .contact-info p { margin: 6px 0; color: var(--muted); }
+    form { display: grid; gap: 14px; }
+    label { font-weight: 600; color: var(--text); }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,0.12);
+      background: #fff;
+      font: inherit;
+      transition: var(--transition);
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid rgba(212,175,55,0.45);
+      border-color: rgba(212,175,55,0.8);
+    }
+    textarea { min-height: 120px; resize: vertical; }
+    .checkbox-row { display: flex; gap: 10px; align-items: flex-start; }
+    .checkbox-row input { width: auto; margin-top: 4px; }
+    .map-placeholder {
+      margin-top: 20px;
+      height: 280px;
+      border-radius: 16px;
+      background: repeating-linear-gradient(45deg, #e0d4c2, #e0d4c2 10px, #d3c7b6 10px, #d3c7b6 20px);
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.4px;
+    }
+
+    /* Footer */
+    footer {
+      background: #2a0d07;
+      color: #f7efe6;
+      padding: 32px 0;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      align-items: center;
+    }
+    .footer-nav, .footer-legal { display: flex; gap: 12px; flex-wrap: wrap; }
+    .footer-nav a, .footer-legal a { color: #f7efe6; opacity: 0.9; }
+    .socials { display: flex; gap: 12px; }
+    .social-circle {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(212,175,55,0.6);
+      display: grid; place-items: center;
+      color: var(--gold);
+      background: rgba(255,255,255,0.06);
+    }
+
+    /* Cookie banner */
+    .cookie-banner {
+      position: fixed;
+      bottom: 18px; left: 50%; transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.14);
+      padding: 18px;
+      border-radius: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      max-width: 900px;
+      width: calc(100% - 32px);
+      z-index: 2000;
+    }
+    .cookie-banner p { margin: 0; color: var(--muted); }
+    .cookie-actions { display: flex; gap: 10px; margin-left: auto; }
+
+    /* Animations */
+    .fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      nav ul { display: none; }
+      .burger { display: inline-flex; }
+      .nav-actions { display: none; }
+      header { padding: 0 0; }
+      .nav-wrapper { padding: 12px 0; }
+    }
+    @media (max-width: 720px) {
+      .hero { padding-top: 130px; }
+      .cookie-banner { flex-direction: column; align-items: flex-start; }
+      .cookie-actions { width: 100%; justify-content: flex-end; }
+    }
+  </style>
+</head>
+<body>
+  <header id="top">
+    <div class="container nav-wrapper">
+      <div class="logo">Smile Thai Spa</div>
+      <nav>
+        <ul>
+          <li><a href="#start">Startseite</a></li>
+          <li><a href="#angebot">Angebot</a></li>
+          <li><a href="#about">Über uns</a></li>
+          <li><a href="#galerie">Galerie</a></li>
+          <li><a href="#gutscheine">Gutscheine</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+          <li><a href="#kontakt" class="btn btn-primary">Termin anfragen</a></li>
+        </ul>
+      </nav>
+      <button class="burger" aria-label="Menü öffnen"><span></span></button>
+      <div class="mobile-nav" id="mobileNav">
+        <a href="#start">Startseite</a>
+        <a href="#angebot">Angebot</a>
+        <a href="#about">Über uns</a>
+        <a href="#galerie">Galerie</a>
+        <a href="#gutscheine">Gutscheine</a>
+        <a href="#kontakt">Kontakt</a>
+        <a href="#kontakt" class="btn btn-primary">Termin anfragen</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero fade-in" id="start">
+      <div class="container">
+        <div class="eyebrow">Ihre Wohlfühloase in Baden bei Wien</div>
+        <h1>Smile Thai Spa – Entspannung für Körper und Geist</h1>
+        <p>Sanfte Düfte, warme Farben und achtsame Rituale laden Sie ein, den Alltag hinter sich zu lassen. Hier verbinden sich thailändische Wohlfühltradition und moderne Ruheoase zu einem Ort, der Ihren Energiehaushalt sanft in Balance bringt.</p>
+        <div class="hero-buttons">
+          <a class="btn btn-primary" href="#kontakt">Termin anfragen</a>
+          <a class="btn btn-secondary" href="#angebot">Angebot entdecken</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="why fade-in" id="warum">
+      <div class="container why-grid">
+        <div class="why-text">
+          <h2 class="section-title">Tauchen Sie ein in eine Welt der Achtsamkeit</h2>
+          <p>Smile Thai Spa empfängt Sie mit ruhiger Atmosphäre, warmen Materialien und dem Gefühl, willkommen zu sein. Jeder Raum ist so gestaltet, dass Sie tief durchatmen und neue Kraft sammeln können.</p>
+          <p>Unsere Wohlfühlrituale vereinen traditionelle thailändische Berührungskunst mit modernen Entspannungstechniken. Sie entscheiden, ob Sie sanft loslassen oder neue Energie spüren möchten – wir begleiten Sie achtsam.</p>
+          <p>Wir nehmen uns Zeit für persönliche Beratung, damit jede Anwendung genau das bietet, was Sie jetzt brauchen: Ruhe, Harmonie und ein spürbar leichtes Körpergefühl.</p>
+        </div>
+        <div class="icon-list">
+          <div class="icon-card">
+            <div class="icon-circle">✺</div>
+            <div>
+              <h4>Ruhige, warme Atmosphäre</h4>
+              <p>Gedimmtes Licht, natürliche Materialien und viel Raum für Stille.</p>
+            </div>
+          </div>
+          <div class="icon-card">
+            <div class="icon-circle">✿</div>
+            <div>
+              <h4>Erfahrene Spa-Expertinnen</h4>
+              <p>Einfühlsame Anwendungen mit thailändischer Herzlichkeit.</p>
+            </div>
+          </div>
+          <div class="icon-card">
+            <div class="icon-circle">❂</div>
+            <div>
+              <h4>Qualität, Sauberkeit &amp; Hygiene</h4>
+              <p>Hochwertige Öle, frische Wäsche und sorgfältige Reinigung.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="offer fade-in" id="angebot">
+      <div class="container">
+        <h2 class="section-title">Unsere Wohlfühlrituale</h2>
+        <p class="section-subtitle">Wählen Sie das Ritual, das jetzt zu Ihnen passt. Wir beraten Sie gern persönlich zu Intensität, Duft und Fokus.</p>
+        <div class="offer-grid">
+          <div class="card">
+            <h3>Aromaöl Deluxe – Ganzkörper-Wohlfühlritual</h3>
+            <p>Warme Öle, fließende Streichungen und sanfte Druckpunkte schenken tiefe Entspannung von Kopf bis Fuß.</p>
+            <ul>
+              <li>Sanftes Lösen von Spannungen</li>
+              <li>Fördert erholsamen Schlaf</li>
+              <li>Beruhigt Geist und Sinne</li>
+            </ul>
+            <a class="btn btn-secondary" href="#kontakt">Mehr erfahren</a>
+          </div>
+          <div class="card">
+            <h3>Relax Ritual – Kopf, Nacken &amp; Rücken</h3>
+            <p>Ideal bei langen Arbeitstagen: wohltuende Griffe für Nacken, Schultern und Rücken mit Fokus auf innere Ruhe.</p>
+            <ul>
+              <li>Lindert Kopf- und Schulterlast</li>
+              <li>Reduziert Stressgefühle</li>
+              <li>Fördert das innere Gleichgewicht</li>
+            </ul>
+            <a class="btn btn-secondary" href="#kontakt">Mehr erfahren</a>
+          </div>
+          <div class="card">
+            <h3>Vital Ritual – Fußreflex-Zonen</h3>
+            <p>Belebende Stimulation der Fußreflexzonen für leichte Beine und ein neues Gefühl von Energie.</p>
+            <ul>
+              <li>Aktiviert die Durchblutung</li>
+              <li>Schenkt Leichtigkeit im Alltag</li>
+              <li>Wohltuend nach langen Tagen</li>
+            </ul>
+            <a class="btn btn-secondary" href="#kontakt">Mehr erfahren</a>
+          </div>
+          <div class="card">
+            <h3>Paar-Ritual – Entspannen zu zweit</h3>
+            <p>Gemeinsam zur Ruhe kommen: zwei Liegen, warme Öle und Zeit nur für Sie beide.</p>
+            <ul>
+              <li>Harmonisierendes Erlebnis</li>
+              <li>Sanfte, synchrone Anwendungen</li>
+              <li>Ideal für besondere Anlässe</li>
+            </ul>
+            <a class="btn btn-secondary" href="#kontakt">Mehr erfahren</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="specials fade-in" id="specials">
+      <div class="container">
+        <h2 class="section-title">Aktionen &amp; Specials</h2>
+        <p class="section-subtitle" style="color:#f7efe6;">Profitieren Sie von wechselnden Angeboten, die Freude und Entspannung verschenken oder einfach Ihre nächste Auszeit versüßen.</p>
+        <div class="specials-grid">
+          <div class="special-card">
+            <h3>10+1 Wohlfühl-Ritual Aktion</h3>
+            <p>Genießen Sie zehn Anwendungen und erhalten Sie ein weiteres Wohlfühlritual als Dankeschön. Ideal für regelmäßige Auszeiten.</p>
+          </div>
+          <div class="special-card">
+            <h3>Paar-Ritual Special</h3>
+            <p>Planen Sie einen gemeinsamen Verwöhnmoment: Auf Voranmeldung gestalten wir Ihren Besuch mit besonderen Duftnoten und Tee-Zeremonie.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about fade-in" id="about">
+      <div class="container about-grid">
+        <div>
+          <h2 class="section-title" style="text-align:left;">Wer hinter Smile Thai Spa steht</h2>
+          <p>Wir führen Smile Thai Spa mit viel Herz und Respekt vor der thailändischen Wohlfühltradition. Jeder Besuch soll sich anfühlen wie ein kleiner Urlaub: warm, entschleunigend und authentisch.</p>
+          <p>Unser Team begleitet Sie aufmerksam, hört zu und passt jede Anwendung individuell an. So entsteht ein Erlebnis, das lange nachklingt.</p>
+        </div>
+        <div class="team-cards">
+          <div class="team-card">
+            <div class="avatar">S1</div>
+            <div>
+              <h4>Name 1 – Spa-Expertin</h4>
+              <p>Feingefühl, Präzision und ein offenes Lächeln prägen ihre wohltuenden Rituale.</p>
+            </div>
+          </div>
+          <div class="team-card">
+            <div class="avatar">S2</div>
+            <div>
+              <h4>Name 2 – Spa-Expertin</h4>
+              <p>Bringt traditionelle Griffe und moderne Techniken in Einklang für spürbare Leichtigkeit.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="gallery fade-in" id="galerie">
+      <div class="container">
+        <h2 class="section-title">Einblicke in unsere Wohlfühlwelt</h2>
+        <p class="section-subtitle">Licht, Wärme und liebevolle Details schaffen Räume zum Ankommen. Ein Blick auf unsere Ruhezonen und kleinen Highlights.</p>
+        <div class="gallery-grid">
+          <div class="gallery-item"></div>
+          <div class="gallery-item"></div>
+          <div class="gallery-item"></div>
+          <div class="gallery-item"></div>
+          <div class="gallery-item"></div>
+          <div class="gallery-item"></div>
+          <div class="gallery-item"></div>
+          <div class="gallery-item"></div>
+          <div class="gallery-item"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="voucher fade-in" id="gutscheine">
+      <div class="container">
+        <h2 class="section-title">Gutscheine verschenken</h2>
+        <p class="section-subtitle">Überraschen Sie Menschen, die Ihnen am Herzen liegen, mit einem kostbaren Moment der Ruhe. Unsere Gutscheine sind ideal für Geburtstage, Feiertage oder als liebevolle Aufmerksamkeit.</p>
+        <div class="voucher-card">
+          <h3>Wohlbefinden als Geschenk</h3>
+          <p>Wählen Sie den Wert individuell und wir gestalten den Gutschein in unserem Signature-Design. Auf Wunsch bereiten wir einen personalisierten Gruß vor.</p>
+          <a class="btn btn-primary" href="#kontakt">Gutschein anfragen</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact fade-in" id="kontakt">
+      <div class="container">
+        <h2 class="section-title" style="text-align:left;">Kontakt &amp; Termin</h2>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>Smile Thai Spa</h3>
+            <div class="contact-info">
+              <p>Palffygasse 4</p>
+              <p>2500 Baden</p>
+              <p>Telefon (Platzhalter): +43 660 123 45 67</p>
+              <p>E-Mail (Platzhalter): info@smile-thai-spa.at</p>
+              <p><strong>Öffnungszeiten:</strong><br>Montag – Freitag: 08:00 – 19:00 Uhr</p>
+              <p>Bitte vereinbaren Sie Ihren Wunschtermin vorab telefonisch oder per Formular.</p>
+            </div>
+          </div>
+          <div class="contact-card">
+            <form>
+              <div>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Ihr Name" required>
+              </div>
+              <div>
+                <label for="email">E-Mail</label>
+                <input type="email" id="email" name="email" placeholder="Ihre E-Mail" required>
+              </div>
+              <div>
+                <label for="phone">Telefonnummer</label>
+                <input type="tel" id="phone" name="phone" placeholder="Ihre Telefonnummer" required>
+              </div>
+              <div>
+                <label for="datetime">Gewünschtes Datum / Uhrzeit</label>
+                <input type="text" id="datetime" name="datetime" placeholder="z.B. 12.06., 17:00 Uhr">
+              </div>
+              <div>
+                <label for="ritual">Wohlfühlritual</label>
+                <select id="ritual" name="ritual">
+                  <option>Aromaöl Deluxe – Ganzkörper-Wohlfühlritual</option>
+                  <option>Relax Ritual – Kopf, Nacken &amp; Rücken</option>
+                  <option>Vital Ritual – Fußreflex-Zonen</option>
+                  <option>Paar-Ritual – Entspannen zu zweit</option>
+                </select>
+              </div>
+              <div>
+                <label for="message">Nachricht / Wünsche</label>
+                <textarea id="message" name="message" placeholder="Was dürfen wir für Sie vorbereiten?"></textarea>
+              </div>
+              <div class="checkbox-row">
+                <input type="checkbox" id="privacy" required>
+                <label for="privacy">Ich stimme zu, dass meine Daten zur Bearbeitung meiner Anfrage verwendet werden.</label>
+              </div>
+              <button class="btn btn-primary" type="submit">Termin anfragen</button>
+            </form>
+          </div>
+        </div>
+        <div class="map-placeholder">Google Maps Platzhalter</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <div class="logo" style="color:#f7efe6;">Smile Thai Spa</div>
+        <p style="margin:8px 0 0;color:#f7efe6;opacity:0.85;">Ihr Ort für Ruhe &amp; Wohlbefinden.</p>
+      </div>
+      <div class="footer-nav">
+        <a href="#start">Startseite</a>
+        <a href="#angebot">Angebot</a>
+        <a href="#gutscheine">Gutscheine</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-end;">
+        <div class="footer-legal">
+          <a href="#">Impressum</a>
+          <a href="#">Datenschutzerklärung</a>
+        </div>
+        <div class="socials">
+          <div class="social-circle">f</div>
+          <div class="social-circle">in</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="cookie-banner" id="cookieBanner">
+    <p>Wir verwenden Cookies für Funktionen und anonyme Statistik. Sie können jederzeit entscheiden.</p>
+    <div class="cookie-actions">
+      <button class="btn btn-secondary" id="cookieDecline">Ablehnen</button>
+      <button class="btn btn-primary" id="cookieAccept">Akzeptieren</button>
+    </div>
+  </div>
+
+  <script>
+    const burger = document.querySelector('.burger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    burger.addEventListener('click', () => {
+      document.body.classList.toggle('nav-open');
+    });
+
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.body.classList.remove('nav-open');
+      });
+    });
+
+    // Intersection Observer for fade-ins
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.25 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Cookie banner
+    const banner = document.getElementById('cookieBanner');
+    const accept = document.getElementById('cookieAccept');
+    const decline = document.getElementById('cookieDecline');
+
+    const closeBanner = () => banner.style.display = 'none';
+    accept.addEventListener('click', closeBanner);
+    decline.addEventListener('click', closeBanner);
+  </script>
+</body>
+</html>
